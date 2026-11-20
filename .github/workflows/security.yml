@@ -16,18 +16,23 @@ jobs:
             actions: read
             security-events: write
         steps:
-          - uses: actions/checkout@v4
-          - uses: github/codeql-action/init@v4
-            
+          - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+          - uses: github/codeql-action/init@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
+            with:
+              languages: python 
+              build-mode: none 
+          - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
     trivy:
-        runs-on: ubuntu-latest 
+        runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v4
+          - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
           - name: Run Trivy filesystem scan
             uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1 # v0.35.0
             with:
               scan-type: 'fs'
               scan-ref: .
-              severity: HIGH,CRITICAL
+              severity: 'CRITICAL,HIGH'
               ignore-unfixed: true
               exit-code: '1'
+          
+
